@@ -1,4 +1,4 @@
-#!/usr/bin/python -tt
+#!/usr/bin/python2 -tt
 # Copyright 2010 Google Inc.
 # Licensed under the Apache License, Version 2.0
 # http://www.apache.org/licenses/LICENSE-2.0
@@ -21,8 +21,11 @@
 # and last chars of the string are the same.
 # Note: python does not have a ++ operator, but += works.
 def match_ends(words):
-  # +++your code here+++
-  return
+  result = 0
+  for i in words:
+    if len(i) >= 2 and i[0] == i[len(i)-1]:
+      result += 1
+  return result
 
 
 # B. front_x
@@ -33,8 +36,14 @@ def match_ends(words):
 # Hint: this can be done by making 2 lists and sorting each of them
 # before combining them.
 def front_x(words):
-  # +++your code here+++
-  return
+  xs = []
+  non_x = []
+  for i in words:
+    if i.startswith('x'):
+      xs.append(i)
+    else:
+      non_x.append(i)
+  return sorted(xs) + sorted(non_x)
 
 
 
@@ -43,11 +52,12 @@ def front_x(words):
 # order by the last element in each tuple.
 # e.g. [(1, 7), (1, 3), (3, 4, 5), (2, 2)] yields
 # [(2, 2), (1, 3), (3, 4, 5), (1, 7)]
-# Hint: use a custom key= function to extract the last element form each tuple.
-def sort_last(tuples):
-  # +++your code here+++
-  return
+# Hint: use a custom key= function to extract the last element from each tuple.
+def _get_key(tpl):
+    return tpl[len(tpl) - 1]
 
+def sort_last(tuples):
+  return sorted(tuples, key=_get_key)
 
 # Simple provided test() function used in main() to print
 # what each function returns vs. what it's supposed to return.
@@ -75,7 +85,7 @@ def main():
   test(front_x(['mix', 'xyz', 'apple', 'xanadu', 'aardvark']),
        ['xanadu', 'xyz', 'aardvark', 'apple', 'mix'])
 
-       
+
   print
   print 'sort_last'
   test(sort_last([(1, 3), (3, 2), (2, 1)]),
